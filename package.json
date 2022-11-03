@@ -1,0 +1,27 @@
+{
+    "name": "simple-list-todo",
+    "version": "1.0.0",
+    "description": "데브코스 2번째 과제",
+    "main": "index.js",
+    "directories": {
+        "doc": "docs"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/prgrms-fe-devcourse/FEDC3-3_VanillaJS_1.git"
+    },
+    "author": "suhwa",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/prgrms-fe-devcourse/FEDC3-3_VanillaJS_1/issues"
+    },
+    "homepage": "https://github.com/prgrms-fe-devcourse/FEDC3-3_VanillaJS_1#readme",
+    "devDependencies": {
+        "eslint": "^7.32.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-prettier": "^4.2.1"
+    }
+}
