@@ -1,10 +1,10 @@
 import { getItem, setItem } from "./storage.js";
+import TodoCount from "./TodoCount.js";
 import TodoForm from "./TodoForm.js";
 import TodoList from "./TodoList.js";
 
 export default class TodoApp {
     constructor({ appElement }) {
-        // 이용할 상태값 넣기
         this.appElement = appElement;
         this.todoListKey = "todos";
         this.render();
@@ -17,6 +17,7 @@ export default class TodoApp {
                 const nextState = [...todoList.state, { text, isCompleted: false }];
                 setItem(this.todoListKey, nextState);
                 todoList.setState(nextState);
+                todoCount.setState(nextState);
             },
         });
 
@@ -34,6 +35,7 @@ export default class TodoApp {
                 // 변경된 데이터 반영 - 로컬, todoList
                 setItem(this.todoListKey, newState);
                 todoList.setState(newState);
+                todoCount.setState(newState);
             },
             onDelete: key => {
                 const newState = [...todoList.state];
@@ -41,7 +43,13 @@ export default class TodoApp {
 
                 setItem(this.todoListKey, newState);
                 todoList.setState(newState);
+                todoCount.setState(newState);
             },
+        });
+
+        const todoCount = new TodoCount({
+            appElement: this.appElement,
+            initialValue: getItem(this.todoListKey, []),
         });
     }
 }
