@@ -1,4 +1,4 @@
-import isValidTodoList from "./utils/validation.js";
+import isValidTodoList from "../utils/validation.js";
 
 export default class TodoCount {
     constructor({ appElement, initialValue }) {

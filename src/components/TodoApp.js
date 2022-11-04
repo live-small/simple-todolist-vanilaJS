@@ -1,9 +1,9 @@
 import Header from "./Header.js";
-import { getItem, setItem } from "./storage.js";
 import TodoCount from "./TodoCount.js";
 import TodoForm from "./TodoForm.js";
 import TodoList from "./TodoList.js";
-import isValidTodoList from "./utils/validation.js";
+import isValidTodoList from "../utils/validation.js";
+import { setItem, getItem } from "../utils/storage.js";
 
 export default class TodoApp {
     constructor({ appElement }) {
