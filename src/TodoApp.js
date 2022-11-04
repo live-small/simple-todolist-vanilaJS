@@ -1,3 +1,4 @@
+import Header from "./Header.js";
 import { getItem, setItem } from "./storage.js";
 import TodoCount from "./TodoCount.js";
 import TodoForm from "./TodoForm.js";
@@ -11,7 +12,11 @@ export default class TodoApp {
     }
 
     render() {
-        const todoForm = new TodoForm({
+        Header({
+            appElement: this.appElement,
+        });
+
+        new TodoForm({
             appElement: this.appElement,
             onSubmit: text => {
                 const nextState = [...todoList.state, { text, isCompleted: false }];
