@@ -1,9 +1,10 @@
+import isValidTodoList from "./utils/validation.js";
+
 export default class TodoList {
     constructor({ appElement, initialValue, onToggle, onDelete }) {
         this.containerElement = document.createElement("ul");
         appElement.appendChild(this.containerElement);
-        this.state = initialValue;
-
+        this.state = isValidTodoList(initialValue) ? initialValue : [];
         this.render();
         this.bindEvent(onToggle, onDelete);
     }

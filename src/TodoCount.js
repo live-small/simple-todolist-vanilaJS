@@ -1,8 +1,12 @@
+import isValidTodoList from "./utils/validation.js";
+
 export default class TodoCount {
     constructor({ appElement, initialValue }) {
         this.containerElement = document.createElement("section");
         appElement.appendChild(this.containerElement);
-        this.state = this.calculate(initialValue);
+
+        const validValue = isValidTodoList(initialValue) ? initialValue : [];
+        this.state = this.calculate(validValue);
         this.render();
     }
 
