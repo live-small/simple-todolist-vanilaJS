@@ -2,12 +2,18 @@ const isValidTodoList = todoList => {
     if (!checkTypeOfTodoList(todoList)) return false;
 
     const requiredProperty = ["text", "isCompleted"];
-    const todoOfMissingProperty = todoList.filter(todo => {
-        const validTodo = requiredProperty.every(property => property in todo);
-        return !validTodo;
+    const isValid = todoList.every(todo => {
+        const validProperty = requiredProperty.every(property => property in todo);
+
+        if (validProperty) {
+            const isValidType =
+                typeof todo.text === "string" && typeof todo.isCompleted === "boolean";
+            return isValidType;
+        }
+        return false;
     });
 
-    return todoOfMissingProperty.length === 0;
+    return isValid;
 };
 
 const checkTypeOfTodoList = todoList => {

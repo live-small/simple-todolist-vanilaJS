@@ -9,6 +9,7 @@
     -   todoList state 타입 체크
         -   배열인지, 원소가 object인지
         -   원소에 text, isCompleted 속성값이 있는지
+        -   text, isCompleted 타입이 각각 string, boolean 맞는지
 
 -   [x] todo를 클릭하면 삭선이 그어진다 (완료했음을 표시)
     -   `isCompleted` 값으로 제어
