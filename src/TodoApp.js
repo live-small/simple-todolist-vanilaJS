@@ -14,7 +14,7 @@ export default class TodoApp {
         const todoForm = new TodoForm({
             appElement: this.appElement,
             onSubmit: text => {
-                const nextState = [...todoList.state, { text }];
+                const nextState = [...todoList.state, { text, isCompleted: false }];
                 setItem(this.todoListKey, nextState);
                 todoList.setState(nextState);
             },
@@ -23,6 +23,18 @@ export default class TodoApp {
         const todoList = new TodoList({
             appElement: this.appElement,
             initialValue: getItem(this.todoListKey, []),
+            onToggle: key => {
+                // key의 isCompleted 변경
+                const nextState = [...todoList.state];
+                nextState[key] = {
+                    ...nextState[key],
+                    isCompleted: !nextState[key].isCompleted,
+                };
+
+                // 변경된 데이터 반영 - 로컬, todoList
+                setItem(this.todoListKey, nextState);
+                todoList.setState(nextState);
+            },
         });
     }
 }
