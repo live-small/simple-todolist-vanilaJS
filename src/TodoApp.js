@@ -25,15 +25,22 @@ export default class TodoApp {
             initialValue: getItem(this.todoListKey, []),
             onToggle: key => {
                 // key의 isCompleted 변경
-                const nextState = [...todoList.state];
-                nextState[key] = {
-                    ...nextState[key],
-                    isCompleted: !nextState[key].isCompleted,
+                const newState = [...todoList.state];
+                newState[key] = {
+                    ...newState[key],
+                    isCompleted: !newState[key].isCompleted,
                 };
 
                 // 변경된 데이터 반영 - 로컬, todoList
-                setItem(this.todoListKey, nextState);
-                todoList.setState(nextState);
+                setItem(this.todoListKey, newState);
+                todoList.setState(newState);
+            },
+            onDelete: key => {
+                const newState = [...todoList.state];
+                newState.splice(key, 1);
+
+                setItem(this.todoListKey, newState);
+                todoList.setState(newState);
             },
         });
     }

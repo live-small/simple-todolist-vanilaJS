@@ -1,11 +1,11 @@
 export default class TodoList {
-    constructor({ appElement, initialValue, onToggle }) {
+    constructor({ appElement, initialValue, onToggle, onDelete }) {
         this.containerElement = document.createElement("ul");
         appElement.appendChild(this.containerElement);
         this.state = initialValue;
 
         this.render();
-        this.bindEvent(onToggle);
+        this.bindEvent(onToggle, onDelete);
     }
 
     setState(nextState) {
@@ -26,14 +26,14 @@ export default class TodoList {
             .join("");
     }
 
-    bindEvent(onToggle) {
+    bindEvent(onToggle, onDelete) {
         this.containerElement.addEventListener("click", event => {
             const { todoKey } = event.target.closest("li").dataset;
 
             if (event.target.className === "todo-item") {
                 onToggle(todoKey);
             } else {
-                // remove-button
+                onDelete(todoKey);
             }
         });
     }
