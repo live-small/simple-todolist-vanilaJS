@@ -20,12 +20,12 @@ export default class TodoApp {
         new TodoForm({
             appElement: this.appElement,
             onSubmit: text => {
-                const nextState = [...todoList.state, { text, isCompleted: false }];
+                const newState = [...todoList.state, { text, isCompleted: false }];
 
-                if (isValidTodoList(nextState)) {
-                    setItem(this.todoListKey, nextState);
-                    todoList.setState(nextState);
-                    todoCount.setState(nextState);
+                if (isValidTodoList(newState)) {
+                    setItem(this.todoListKey, newState);
+                    todoList.setState(newState);
+                    todoCount.setState(newState);
                 }
             },
         });
