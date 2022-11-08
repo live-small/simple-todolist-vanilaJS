@@ -29,8 +29,9 @@ export default class TodoList {
 
     bindEvent(onToggle, onDelete) {
         this.containerElement.addEventListener("click", event => {
-            const { todoKey } = event.target.closest("li").dataset;
+            if (!event.target.closest("li")) return;
 
+            const { todoKey } = event.target.closest("li").dataset;
             if (event.target.className === "todo-item") {
                 onToggle(todoKey);
             } else {
