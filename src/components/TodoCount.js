@@ -2,31 +2,31 @@ import isValidTodoList from "../utils/validation.js";
 
 export default class TodoCount {
     constructor({ appElement, initialValue }) {
-        this.containerElement = document.createElement("section");
+        this.containerElement = document.createElement("footer");
         appElement.appendChild(this.containerElement);
 
-        const validValue = isValidTodoList(initialValue) ? initialValue : [];
-        this.state = this.calculate(validValue);
+        const todos = isValidTodoList(initialValue) ? initialValue : [];
+        this.state = this.calculateTodoCount(todos);
         this.render();
     }
 
-    calculate(todos) {
+    calculateTodoCount(todos) {
         return {
-            completedTodo: todos.filter(todo => todo.isCompleted).length,
+            completedTodo: todos.filter((todo) => todo.isCompleted).length,
             totalTodo: todos.length,
         };
     }
 
     setState(todos) {
-        const newState = this.calculate(todos);
-        this.state = newState;
+        const todoCount = this.calculateTodoCount(todos);
+        this.state = todoCount;
         this.render();
     }
 
     render() {
         this.containerElement.innerHTML = `
-		<div>완료된 Todo: ${this.state.completedTodo}</div>
-		<div>전체 Todo: ${this.state.totalTodo}</div>
+			<div>완료된 Todo: ${this.state.completedTodo}</div>
+			<div>전체 Todo: ${this.state.totalTodo}</div>
 		`;
     }
 }
