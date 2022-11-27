@@ -14,7 +14,7 @@ export default class TodoForm {
     render() {
         this.containerElement.innerHTML = `
 			<label>
-				<input type="text" id="${id.todoFormInput}" value="${this.state}" autofocus placeholder="할 일을 입력하세요"></input>
+				<input type="text" id="${id.todoFormInput}" value="${this.state}" placeholder="할 일을 입력하세요"></input>
 				<button>추가</button>
 			</label>
 		`;
