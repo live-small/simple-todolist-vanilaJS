@@ -28,14 +28,15 @@ export default class TodoList {
     }
 
     bindEvent(onToggle, onDelete) {
-        this.containerElement.addEventListener("click", event => {
+        this.containerElement.addEventListener("click", (event) => {
             if (!event.target.closest("li")) return;
 
             const { todoKey } = event.target.closest("li").dataset;
+            const todokeyNumberType = parseInt(todoKey);
             if (event.target.className === "todo-item") {
-                onToggle(todoKey);
+                onToggle(todokeyNumberType);
             } else {
-                onDelete(todoKey);
+                onDelete(todokeyNumberType);
             }
         });
     }

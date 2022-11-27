@@ -9,60 +9,63 @@ export default class TodoApp {
     constructor({ appElement }) {
         this.appElement = appElement;
         this.todoListKey = "todos";
-        this.render();
+        this.state = {
+            todos: getItem(this.todoListKey, []),
+        };
+        this.turnOn();
     }
 
-    render() {
+    setTodos(newTodos) {
+        if (!isValidTodoList(newTodos)) return;
+
+        setItem(this.todoListKey, newTodos);
+        this.state.todos = newTodos;
+
+        this.todoListComponent.setState(newTodos);
+        this.todoCountComponent.setState(newTodos);
+    }
+
+    turnOn() {
         Header({
             appElement: this.appElement,
         });
 
         new TodoForm({
             appElement: this.appElement,
-            onSubmit: text => {
-                const newState = [...todoList.state, { text, isCompleted: false }];
+            onSubmit: (text) => {
+                const newTodos = [...this.state.todos, { text, isCompleted: false }];
 
-                if (isValidTodoList(newState)) {
-                    setItem(this.todoListKey, newState);
-                    todoList.setState(newState);
-                    todoCount.setState(newState);
-                }
+                this.setTodos(newTodos);
             },
         });
 
-        const todoList = new TodoList({
+        this.todoListComponent = new TodoList({
             appElement: this.appElement,
-            initialValue: getItem(this.todoListKey, []),
-            onToggle: key => {
-                // key의 isCompleted 변경
-                const newState = [...todoList.state];
-                newState[key] = {
-                    ...newState[key],
-                    isCompleted: !newState[key].isCompleted,
-                };
+            initialValue: this.state.todos,
+            onToggle: (targetIndex) => {
+                const newTodos = this.state.todos.map((todo, index) => {
+                    if (index === targetIndex) {
+                        return {
+                            ...todo,
+                            isCompleted: !todo.isCompleted,
+                        };
+                    }
+                    return todo;
+                });
 
-                // 변경된 데이터 반영 - 로컬, todoList
-                if (isValidTodoList(newState)) {
-                    setItem(this.todoListKey, newState);
-                    todoList.setState(newState);
-                    todoCount.setState(newState);
-                }
+                this.setTodos(newTodos);
             },
-            onDelete: key => {
-                const newState = [...todoList.state];
-                newState.splice(key, 1);
+            onDelete: (targetIndex) => {
+                const newTodos = [...this.state.todos];
+                newTodos.splice(targetIndex, 1);
 
-                if (isValidTodoList(newState)) {
-                    setItem(this.todoListKey, newState);
-                    todoList.setState(newState);
-                    todoCount.setState(newState);
-                }
+                this.setTodos(newTodos);
             },
         });
 
-        const todoCount = new TodoCount({
+        this.todoCountComponent = new TodoCount({
             appElement: this.appElement,
-            initialValue: getItem(this.todoListKey, []),
+            initialValue: this.state.todos,
         });
     }
 }
