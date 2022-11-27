@@ -18,6 +18,15 @@ export default class TodoForm {
 				<button>추가</button>
 			</label>
 		`;
+        this.focusInputValue();
+    }
+
+    focusInputValue() {
+        const inputElement = this.containerElement.querySelector(`#${id.todoFormInput}`);
+        const endOfInputValue = inputElement.value.trim().length;
+
+        inputElement.setSelectionRange(endOfInputValue, endOfInputValue);
+        inputElement.focus();
     }
 
     bindEvent(onSubmit) {
