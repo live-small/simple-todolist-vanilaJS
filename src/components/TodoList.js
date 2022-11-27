@@ -1,9 +1,11 @@
+import { id } from "../utils/constants.js";
 import isValidTodoList from "../utils/validation.js";
 
 export default class TodoList {
     constructor({ appElement, initialValue, onToggle, onDelete }) {
         this.containerElement = document.createElement("ul");
         appElement.appendChild(this.containerElement);
+
         this.state = isValidTodoList(initialValue) ? initialValue : [];
         this.render();
         this.bindEvent(onToggle, onDelete);
@@ -16,27 +18,32 @@ export default class TodoList {
 
     render() {
         this.containerElement.innerHTML = this.state
-            .map(({ text, isCompleted }, key) => {
-                const style = `text-decoration-line:${isCompleted ? "line-through" : "none"}`;
-                return `
-					<li data-todo-key=${key} class="todo-item" style=${style}>${text}
-						<button type="button" class="remove-button">삭제</button>
-					</li>
-					`;
-            })
+            .map(
+                ({ text, isCompleted }, key) => `
+					<li data-todo-key=${key} id="${id.todoItem}" class="${isCompleted ? "completed" : ""}">
+						${text}
+						<button type="button" id="${id.todoDeleteButton}" class="remove-button">삭제</button>
+					</li>`
+            )
             .join("");
     }
 
     bindEvent(onToggle, onDelete) {
         this.containerElement.addEventListener("click", (event) => {
-            if (!event.target.closest("li")) return;
+            const liElement = event.target.closest("li");
+            if (!liElement) return;
 
-            const { todoKey } = event.target.closest("li").dataset;
+            const { todoKey } = liElement.dataset;
             const todokeyNumberType = parseInt(todoKey);
-            if (event.target.className === "todo-item") {
+
+            if (event.target.id === id.todoItem) {
                 onToggle(todokeyNumberType);
-            } else {
+                return;
+            }
+
+            if (event.target.id === id.todoDeleteButton) {
                 onDelete(todokeyNumberType);
+                return;
             }
         });
     }
