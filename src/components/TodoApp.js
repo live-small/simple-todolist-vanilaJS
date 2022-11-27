@@ -4,13 +4,13 @@ import TodoForm from "./TodoForm.js";
 import TodoList from "./TodoList.js";
 import isValidTodoList from "../utils/validation.js";
 import { setItem, getItem } from "../utils/storage.js";
+import { storageKey } from "../utils/constants.js";
 
 export default class TodoApp {
     constructor({ appElement }) {
         this.appElement = appElement;
-        this.todoListKey = "todos";
         this.state = {
-            todos: getItem(this.todoListKey, []),
+            todos: getItem(storageKey.todoList, []),
         };
         this.turnOn();
     }
@@ -18,7 +18,7 @@ export default class TodoApp {
     setTodos(newTodos) {
         if (!isValidTodoList(newTodos)) return;
 
-        setItem(this.todoListKey, newTodos);
+        setItem(storageKey.todoList, newTodos);
         this.state.todos = newTodos;
 
         this.todoListComponent.setState(newTodos);
